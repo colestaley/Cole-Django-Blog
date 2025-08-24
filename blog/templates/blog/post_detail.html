@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<article style="max-width:600px; margin:auto; padding:20px; border:1px solid #ccc; border-radius:5px;">
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content|linebreaks }}</p>
+    <p><small>Created at: {{ post.created_at }}</small></p>
+
+    <!-- Edit/Delete buttons visible ONLY to superusers -->
+    {% if request.user.is_authenticated and request.user.is_superuser %}
+        <p>
+            <a href="{% url 'post_update' post.pk %}" style="margin-right:10px; padding:5px 10px; background-color:#2196F3; color:white; text-decoration:none; border-radius:4px;">Edit</a>
+            <a href="{% url 'post_delete' post.pk %}" style="padding:5px 10px; background-color:#f44336; color:white; text-decoration:none; border-radius:4px;">Delete</a>
+        </p>
+    {% endif %}
+
+    <!-- Back to post list -->
+    <p>
+        <a href="{% url 'post_list' %}" style="text-decoration:underline;">&larr; Back to Posts</a>
+    </p>
+</article>
+{% endblock %}

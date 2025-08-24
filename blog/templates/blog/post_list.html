@@ -1,0 +1,16 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<h1>Blog Posts</h1>
+{% if posts %}
+    {% for post in posts %}
+        <article>
+            <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+            <small>{{ post.created_at }}</small>
+            <p>{{ post.content|truncatechars:200 }}</p>
+        </article>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No posts yet.</p>
+{% endif %}
+{% endblock %}
